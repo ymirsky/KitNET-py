@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import time
 
-##########################################
+##############################################################################
 # KitNET is a lightweight online anomaly detection algorithm based on an ensemble of autoencoders.
 # For more information and citation, please see our NDSS'18 paper: Kitsune: An Ensemble of Autoencoders for Online Network Intrusion Detection
 
@@ -12,7 +12,7 @@ import time
 # Each observation is a snapshot of the network's state in terms of incremental damped statistics (see the NDSS paper for more details)
 
 #The runtimes presented in the paper, are based on the C++ implimentation (roughly 100x faster than the python implimentation)
-##########################################
+###################  Last Tested with Anaconda 2.7.14   #######################
 
 # Load sample dataset (a recording of the Mirai botnet malware being activated)
 # The first 70,000 observations are clean...
@@ -50,6 +50,7 @@ benignSample = np.log(RMSEs[FMgrace+ADgrace+1:71000])
 logProbs = norm.logsf(np.log(RMSEs), np.mean(benignSample), np.std(benignSample))
 
 # plot the RMSE anomaly scores
+print("Plotting results")
 from matplotlib import pyplot as plt
 from matplotlib import cm
 plt.figure(figsize=(10,5))
