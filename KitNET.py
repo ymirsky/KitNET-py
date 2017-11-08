@@ -24,7 +24,10 @@ class KitNET:
             self.FM_grace_period = AD_grace_period
         else:
             self.FM_grace_period = FM_grace_period
-        self.m = max_autoencoder_size
+        if max_autoencoder_size <= 0:
+            self.m = 1
+        else:
+            self.m = max_autoencoder_size
         self.lr = learning_rate
         self.hr = hidden_ratio
         self.n = n
@@ -34,10 +37,10 @@ class KitNET:
         self.n_executed = 0 # the number of executed instances so far
         self.v = feature_map
         if self.v is None:
-            print("FM: train-mode, AD: off-mode")
+            print("Feature-Mapper: train-mode, Anomaly-Detector: off-mode")
         else:
             self.__createAD__()
-            print("FM: execute-mode, AD: train-mode")
+            print("Feature-Mapper: execute-mode, Anomaly-Detector: train-mode")
         self.FM = CC.corClust(self.n) #incremental feature cluatering for the feature mapping process
         self.ensembleLayer = []
         self.outputLayer = None
@@ -49,19 +52,20 @@ class KitNET:
         if self.n_trained > self.FM_grace_period + self.AD_grace_period: #If both the FM and AD are in execute-mode
             return self.execute(x)
         else:
-            return self.train(x)
+            self.train(x)
+            return 0.0
 
     #force train KitNET on x
     #returns the anomaly score of x during training (do not use for alerting)
     def train(self,x):
-        RMSE = 0 # the default anomaly score
         if self.n_trained <= self.FM_grace_period and self.v is None: #If the FM is in train-mode, and the user has not supplied a feature mapping
             #update the incremetnal correlation matrix
             self.FM.update(x)
             if self.n_trained == self.FM_grace_period: #If the feature mapping should be instantiated
                 self.v = self.FM.cluster(self.m)
                 self.__createAD__()
-                print("FM: execute-mode, AD: train-mode")
+                print("The Feature-Mapper found a mapping: "+str(self.n)+" features to "+str(len(self.v))+" autoencoders.")
+                print("Feature-Mapper: execute-mode, Anomaly-Detector: train-mode")
         else: #train
             ## Ensemble Layer
             S_l1 = np.zeros(len(self.ensembleLayer))
@@ -70,9 +74,10 @@ class KitNET:
                 xi = x[self.v[a]]
                 S_l1[a] = self.ensembleLayer[a].train(xi)
             ## OutputLayer
-            RMSE = self.outputLayer.train(S_l1)
+            self.outputLayer.train(S_l1)
+            if self.n_trained == self.AD_grace_period+self.FM_grace_period:
+                print("Feature-Mapper: execute-mode, Anomaly-Detector: exeute-mode")
         self.n_trained += 1
-        return RMSE
 
     #force execute KitNET on x
     def execute(self,x):

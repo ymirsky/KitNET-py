@@ -103,7 +103,7 @@ class dA:
         self.W += self.params.lr * L_W
         self.hbias += self.params.lr * numpy.mean(L_hbias, axis=0)
         self.vbias += self.params.lr * numpy.mean(L_vbias, axis=0)
-        return numpy.sqrt(numpy.mean(L_h2**2))
+        return numpy.sqrt(numpy.mean(L_h2**2)) #the RMSE reconstruction error during training
 
 
     def reconstruct(self, x):
