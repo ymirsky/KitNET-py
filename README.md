@@ -1,5 +1,6 @@
 # Overview
 In this repository you will find a Python implementation of KitNET; an online anomaly detector, based on an ensemble of autoencoders. From,
+
 *Yisroel Mirsky, Tomer Doitshman, Yuval Elovici, and Asaf Shabtai, "Kitsune: An Ensemble of Autoencoders for Online Network Intrusion Detection", Network and Distributed System Security Symposium 2018 (NDSS'18)*
 
 # What is KitNET?
