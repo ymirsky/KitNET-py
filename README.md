@@ -70,6 +70,10 @@ import example.py
 The code was written and with the Python environment Anaconda: https://anaconda.org/anaconda/python
 For significant speedups, as shown in our paper, you must implement KitNET in C++, or using cython.
 
+# Full Datasets
+The full datasets used in our NDSS paper can be found by following this google drive link:
+https://goo.gl/iShM7E
+
 # License
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
 
