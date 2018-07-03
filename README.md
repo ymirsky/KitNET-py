@@ -3,6 +3,8 @@ In this repository you will find a Python implementation of KitNET; an online an
 
 *Yisroel Mirsky, Tomer Doitshman, Yuval Elovici, and Asaf Shabtai, "Kitsune: An Ensemble of Autoencoders for Online Network Intrusion Detection", Network and Distributed System Security Symposium 2018 (NDSS'18)*
 
+This repo contains the anomaly detector only. For the full network intrusion detection system from the paper, please see https://github.com/ymirsky/Kitsune-py.
+
 # What is KitNET?
 Anomaly detection in unbounded data-streams is a difficult problem since the observed instances cannot be stored for inducing newer models. This challenge becomes even more apparent when the data stream has many features (dimensions) and arrives at a high rate. Under these circumstances, the dataset is in essence "big-data" which makes the offline training of a machine learning algorithm prohibitively slow or expensive. 
 
