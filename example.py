@@ -22,7 +22,7 @@ with zipfile.ZipFile("dataset.zip","r") as zip_ref:
     zip_ref.extractall()
 
 print("Reading Sample dataset...")
-X = pd.read_csv("mirai3.csv",header=None).as_matrix() #an m-by-n dataset with m observations
+X = pd.read_csv("mirai3.csv",header=None).values #an m-by-n dataset with m observations
 
 # KitNET params:
 maxAE = 10 #maximum size for any autoencoder in the ensemble layer
@@ -54,7 +54,7 @@ print("Plotting results")
 from matplotlib import pyplot as plt
 from matplotlib import cm
 plt.figure(figsize=(10,5))
-timestamps = pd.read_csv("mirai3_ts.csv",header=None).as_matrix()
+timestamps = pd.read_csv("mirai3_ts.csv",header=None).values
 fig = plt.scatter(timestamps[FMgrace+ADgrace+1:],RMSEs[FMgrace+ADgrace+1:],s=0.1,c=logProbs[FMgrace+ADgrace+1:],cmap='RdYlGn')
 plt.yscale("log")
 plt.title("Anomaly Scores from KitNET's Execution Phase")
